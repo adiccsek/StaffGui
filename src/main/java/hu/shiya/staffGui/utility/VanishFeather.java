@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 
 public class VanishFeather {
-    public static ItemStack vanishFeather(JavaPlugin plugin) {
+    public static ItemStack createVanishFeather(JavaPlugin plugin) {
         ItemStack item = new ItemStack(Material.FEATHER);
         ItemMeta meta = item.getItemMeta();
 
