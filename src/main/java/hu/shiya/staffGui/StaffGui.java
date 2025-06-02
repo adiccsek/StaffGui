@@ -7,6 +7,7 @@ import hu.shiya.staffGui.listeners.GuiItem;
 import hu.shiya.staffGui.listeners.LeaveListener;
 import hu.shiya.staffGui.listeners.UtilAbilities;
 import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.utility.BossBarManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,12 +21,12 @@ public final class StaffGui extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.command = new StaffCommand(this);
+        this.command = new StaffCommand(this, new BossBarManager());
         getServer().getPluginManager().registerEvents(new BlockListeners(this), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(command, this), this);
         getServer().getPluginManager().registerEvents(new GuiItem(this), this);
         getServer().getPluginManager().registerEvents(new UtilAbilities(this, this), this);
-        getCommand("staff").setExecutor(new StaffCommand(this));
+        getCommand("staff").setExecutor(new StaffCommand(this, new BossBarManager()));
         getCommand("staffitems").setExecutor(new StaffItems(this));
 
     }

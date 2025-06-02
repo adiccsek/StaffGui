@@ -20,33 +20,32 @@ public class GuiItem implements Listener {
     }
 
     @EventHandler
-    public void onItemClick( final InventoryClickEvent event ) {
-        HashMap<UUID, StaffData> staffData = plugin.getStaffPlayers();
+    public void onItemClick(final InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
+
+        if (!event.getView().getTitle().equals("Staff Items")) return;
+        event.setCancelled(true);
+
+        HashMap<UUID, StaffData> staffData = plugin.getStaffPlayers();
         if (!staffData.containsKey(player.getUniqueId())) {
-            event.setCancelled(true);
+            player.sendMessage("You are not in staff mode.");
             return;
         }
-        if (event.isRightClick() || event.isLeftClick() && event.getView().getTitle().equals("Staff Items")) {
-            if (event.getClickedInventory().equals(event.getView().getTopInventory())) {
-                for (ItemStack invItem : player.getInventory().getContents()) {
-                    if (invItem != null && event.getCurrentItem().isSimilar(invItem)) {
-                        event.setCancelled(true);
-                        player.sendMessage("You already have this item!");
-                        return;
-                    }
-                }
-                ItemStack item = event.getCurrentItem();
-                event.setCancelled(true);
 
-                if (item == null || item.getType().isAir()) return;
+        if (!event.getClickedInventory().equals(event.getView().getTopInventory())) return;
 
-                Inventory inventory = player.getInventory();
+        ItemStack clickedItem = event.getCurrentItem();
+        if (clickedItem == null || clickedItem.getType().isAir()) return;
 
-                inventory.addItem(item.clone());
-                player.updateInventory();
-                player.sendMessage("You have recieved " + item.getItemMeta().getDisplayName());
+        for (ItemStack invItem : player.getInventory().getContents()) {
+            if (invItem != null && clickedItem.isSimilar(invItem)) {
+                player.sendMessage("You already have this item!");
+                return;
             }
         }
+
+        player.getInventory().addItem(clickedItem.clone());
+        player.updateInventory();
+        player.sendMessage("You have received " + clickedItem.getItemMeta().getDisplayName());
     }
 }

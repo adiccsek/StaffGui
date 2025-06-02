@@ -2,6 +2,7 @@ package hu.shiya.staffGui.commands;
 
 import hu.shiya.staffGui.StaffGui;
 import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.utility.BossBarManager;
 import hu.shiya.staffGui.utility.OriginalGameMode;
 import hu.shiya.staffGui.utility.StaffGameMode;
 import org.bukkit.Bukkit;
@@ -16,8 +17,10 @@ import java.util.UUID;
 
 public class StaffCommand implements CommandExecutor {
     final private StaffGui plugin;
-    public StaffCommand( final StaffGui plugin ) {
+    final private BossBarManager bossBarManager;
+    public StaffCommand( final StaffGui plugin, final BossBarManager bossBarManager ) {
         this.plugin = plugin;
+        this.bossBarManager = bossBarManager;
     }
 
     @Override
@@ -35,9 +38,12 @@ public class StaffCommand implements CommandExecutor {
 
                 StaffGameMode.applyStaffMode(plugin, player);
                 player.sendMessage("You are now in staff mode!");
+                bossBarManager.showStaffBar(player);
+
             } else {
                 OriginalGameMode.originalGameMode(player, staffData.get(player.getUniqueId()), plugin);
                 player.sendMessage("You are now not in staff mode!");
+                bossBarManager.hideStaffBar(player);
             }
         }
         return true;

@@ -1,5 +1,6 @@
 hu\shiya\staffGui\utility\SpectatorFlint.class
 hu\shiya\staffGui\listeners\LeaveListener.class
+hu\shiya\staffGui\utility\BossBarManager.class
 hu\shiya\staffGui\utility\StaffGameMode.class
 hu\shiya\staffGui\StaffGui.class
 hu\shiya\staffGui\utility\VanishFeather.class

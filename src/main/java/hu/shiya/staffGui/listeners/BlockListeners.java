@@ -22,6 +22,7 @@ public class BlockListeners implements Listener {
         UUID playerID = player.getUniqueId();
         if (staffGui.isPlayerStaff( playerID )) {
             event.setCancelled( true );
+            player.sendMessage("You cannot break blocks in staff mode!");
         }
     }
     @EventHandler
@@ -30,6 +31,7 @@ public class BlockListeners implements Listener {
         UUID playerID = player.getUniqueId();
         if (staffGui.isPlayerStaff( playerID )) {
             event.setCancelled( true );
+            player.sendMessage("You cannot place blocks in staff mode!");
         }
     }
 }
