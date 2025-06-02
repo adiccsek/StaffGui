@@ -24,7 +24,7 @@ public final class StaffGui extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockListeners(this), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(command, this), this);
         getServer().getPluginManager().registerEvents(new GuiItem(this), this);
-        getServer().getPluginManager().registerEvents(new UtilAbilities(this), this);
+        getServer().getPluginManager().registerEvents(new UtilAbilities(this, this), this);
         getCommand("staff").setExecutor(new StaffCommand(this));
         getCommand("staffitems").setExecutor(new StaffItems(this));
 

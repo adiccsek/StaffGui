@@ -3,6 +3,7 @@ package hu.shiya.staffGui.listeners;
 import hu.shiya.staffGui.StaffGui;
 import hu.shiya.staffGui.commands.StaffCommand;
 import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.utility.OriginalGameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +24,7 @@ public class LeaveListener implements Listener {
         try {
             Player player = event.getPlayer();
             HashMap<UUID, StaffData> staffData = plugin.getStaffPlayers();
-            command.switchToSurvival(player, staffData.get(player.getUniqueId()));
+            OriginalGameMode.originalGameMode(player, staffData.get(player.getUniqueId()), plugin);
         } catch (Exception e) {
             plugin.getLogger().severe( e.getMessage() );
         }

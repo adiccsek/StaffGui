@@ -13,6 +13,7 @@ public class StaffData {
     private boolean wasVulnerable;
     private int savedFoodLevel;
     private float savedSaturation;
+    private boolean wasAbleFly;
 
     public StaffData( Player player) {
         this.staffMode = true;
@@ -20,9 +21,10 @@ public class StaffData {
         this.offHand = player.getInventory().getItemInOffHand();
         this.armor = player.getInventory().getArmorContents();
         this.gamemode = player.getGameMode();
-        this.wasVulnerable = player.isInvulnerable();
+        this.wasVulnerable = !player.isInvulnerable();
         this.savedFoodLevel = player.getFoodLevel();
         this.savedSaturation = player.getSaturation();
+        this.wasAbleFly = player.getAllowFlight();
     }
     public boolean getStaffMode() {
         return staffMode;
@@ -47,6 +49,9 @@ public class StaffData {
     }
     public float getSavedSaturation() {
         return savedSaturation;
+    }
+    public boolean getWasAbleFly() {
+        return wasAbleFly;
     }
 }
 

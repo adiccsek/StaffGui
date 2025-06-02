@@ -28,23 +28,25 @@ public class GuiItem implements Listener {
             return;
         }
         if (event.isRightClick() || event.isLeftClick() && event.getView().getTitle().equals("Staff Items")) {
-            for (ItemStack invItem : player.getInventory().getContents()) {
-                if (invItem != null && event.getCurrentItem().isSimilar(invItem)) {
-                    event.setCancelled(true);
-                    player.sendMessage("You already have this item!");
-                    return;
+            if (event.getClickedInventory().equals(event.getView().getTopInventory())) {
+                for (ItemStack invItem : player.getInventory().getContents()) {
+                    if (invItem != null && event.getCurrentItem().isSimilar(invItem)) {
+                        event.setCancelled(true);
+                        player.sendMessage("You already have this item!");
+                        return;
+                    }
                 }
+                ItemStack item = event.getCurrentItem();
+                event.setCancelled(true);
+
+                if (item == null || item.getType().isAir()) return;
+
+                Inventory inventory = player.getInventory();
+
+                inventory.addItem(item.clone());
+                player.updateInventory();
+                player.sendMessage("You have recieved " + item.getItemMeta().getDisplayName());
             }
-            ItemStack item = event.getCurrentItem();
-            event.setCancelled(true);
-
-            if (item == null || item.getType().isAir()) return;
-
-            Inventory inventory = player.getInventory();
-
-            inventory.addItem( item.clone() );
-            player.updateInventory();
-            player.sendMessage("You have recieved " + item.getItemMeta().getDisplayName() );
         }
     }
 }

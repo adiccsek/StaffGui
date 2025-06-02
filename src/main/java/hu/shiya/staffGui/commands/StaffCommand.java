@@ -2,6 +2,8 @@ package hu.shiya.staffGui.commands;
 
 import hu.shiya.staffGui.StaffGui;
 import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.utility.OriginalGameMode;
+import hu.shiya.staffGui.utility.StaffGameMode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -31,41 +33,13 @@ public class StaffCommand implements CommandExecutor {
                 StaffData storedPlayer = new StaffData(player);
                 plugin.setStaffMode(storedPlayer, player);
 
-                switchToStaffMode(player);
+                StaffGameMode.applyStaffMode(plugin, player);
                 player.sendMessage("You are now in staff mode!");
             } else {
-                switchToSurvival(player, staffData.get(player.getUniqueId()));
+                OriginalGameMode.originalGameMode(player, staffData.get(player.getUniqueId()), plugin);
                 player.sendMessage("You are now not in staff mode!");
             }
         }
         return true;
-    }
-    public void switchToStaffMode(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setArmorContents(null);
-        player.getInventory().setItemInOffHand(null);
-        player.updateInventory();
-        player.setFoodLevel(20);
-        player.setSaturation(20);
-        player.setInvulnerable(true);
-        player.setAllowFlight(true);
-
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            player.setFoodLevel(20);
-            player.setSaturation(20);
-        }, 0L, 20L);
-    }
-    public void switchToSurvival(Player player, StaffData staffData) {
-        player.getInventory().setContents(staffData.getInventory());
-        player.getInventory().setArmorContents(staffData.getArmor());
-        player.getInventory().setItemInOffHand(staffData.getOffHand());
-        player.updateInventory();
-        player.setGameMode(staffData.getGameMode());
-        player.setInvulnerable(staffData.getWasVulnerable());
-        player.setFoodLevel(staffData.getSavedFoodLevel());
-        player.setSaturation(staffData.getSavedSaturation());
-        player.setAllowFlight(false);
-        plugin.getStaffPlayers().remove(player.getUniqueId());
-        Bukkit.getScheduler().cancelTasks(plugin);
     }
 }

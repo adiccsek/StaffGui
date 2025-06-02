@@ -18,7 +18,7 @@ public class SpectatorFlint {
 
         meta.setDisplayName(ChatColor.GRAY + "Spectator Flint" );
         ArrayList<String> lore = new ArrayList<>();
-        lore.add("Moves you to spectator gamemode on right click.");
+        lore.add("Moves you to spectator gamemode on right click. \n Click in inventory to exit the mode!");
         meta.setLore(lore);
 
         NamespacedKey key = new NamespacedKey(plugin, "staff_item");
