@@ -1,8 +1,7 @@
 package hu.shiya.staffGui.listeners;
 
 import hu.shiya.staffGui.StaffGui;
-import hu.shiya.staffGui.services.StaffData;
-import hu.shiya.staffGui.utility.OriginalGameMode;
+import hu.shiya.staffGui.classes.StaffData;
 import hu.shiya.staffGui.utility.StaffGameMode;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;

@@ -6,7 +6,7 @@ import hu.shiya.staffGui.listeners.BlockListeners;
 import hu.shiya.staffGui.listeners.GuiItem;
 import hu.shiya.staffGui.listeners.LeaveListener;
 import hu.shiya.staffGui.listeners.UtilAbilities;
-import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.classes.StaffData;
 import hu.shiya.staffGui.utility.BossBarManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

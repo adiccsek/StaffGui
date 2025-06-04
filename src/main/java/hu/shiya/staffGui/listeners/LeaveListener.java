@@ -2,7 +2,7 @@ package hu.shiya.staffGui.listeners;
 
 import hu.shiya.staffGui.StaffGui;
 import hu.shiya.staffGui.commands.StaffCommand;
-import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.classes.StaffData;
 import hu.shiya.staffGui.utility.OriginalGameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

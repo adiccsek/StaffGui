@@ -1,4 +1,4 @@
-package hu.shiya.staffGui.services;
+package hu.shiya.staffGui.classes;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

@@ -1,11 +1,10 @@
 package hu.shiya.staffGui.commands;
 
 import hu.shiya.staffGui.StaffGui;
-import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.classes.StaffData;
 import hu.shiya.staffGui.utility.BossBarManager;
 import hu.shiya.staffGui.utility.OriginalGameMode;
 import hu.shiya.staffGui.utility.StaffGameMode;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

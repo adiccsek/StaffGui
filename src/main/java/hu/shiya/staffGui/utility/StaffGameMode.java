@@ -1,8 +1,7 @@
 package hu.shiya.staffGui.utility;
 
-import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.classes.StaffData;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 

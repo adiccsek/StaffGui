@@ -1,7 +1,7 @@
 package hu.shiya.staffGui.gui;
 
 import hu.shiya.staffGui.StaffGui;
-import hu.shiya.staffGui.services.StaffData;
+import hu.shiya.staffGui.classes.StaffData;
 import hu.shiya.staffGui.utility.SpectatorFlint;
 import hu.shiya.staffGui.utility.TeleportRod;
 import hu.shiya.staffGui.utility.VanishFeather;
