@@ -11,12 +11,16 @@ public class StorageManager {
     public StorageManager(String storageType, StaffGui pluginInstance) {
         this.pluginInstance = pluginInstance;
         if ("mysql".equalsIgnoreCase(storageType)) {
-            this.plugin = new MySqlManager();
+            this.plugin = new MySqlManager(pluginInstance);
         } else if ("config".equalsIgnoreCase(storageType)) {
-            this.plugin = new ConfigManager();
+            this.plugin = new ConfigManager(pluginInstance);
         } else {
             this.plugin = null;
             pluginInstance.getLogger().severe("Please use the correct storage type.");
         }
     }
+    public StorageProvider getPlugin() {
+        return plugin;
+    }
+
 }

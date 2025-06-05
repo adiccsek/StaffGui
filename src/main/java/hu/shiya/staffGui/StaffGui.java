@@ -7,6 +7,7 @@ import hu.shiya.staffGui.listeners.GuiItem;
 import hu.shiya.staffGui.listeners.LeaveListener;
 import hu.shiya.staffGui.listeners.UtilAbilities;
 import hu.shiya.staffGui.classes.StaffData;
+import hu.shiya.staffGui.services.StorageManager;
 import hu.shiya.staffGui.utility.BossBarManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,9 @@ public final class StaffGui extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
         this.command = new StaffCommand(this, new BossBarManager());
         getServer().getPluginManager().registerEvents(new BlockListeners(this), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(command, this), this);
@@ -29,16 +33,19 @@ public final class StaffGui extends JavaPlugin {
         getCommand("staff").setExecutor(new StaffCommand(this, new BossBarManager()));
         getCommand("staffitems").setExecutor(new StaffItems(this));
 
+        //String storageType = this.getConfig().getString("storage-type");
+        String storageType = "mysql";
+        StorageManager storageManager = new StorageManager(storageType, this);
+        getLogger().info("Storage type from config: " + storageType); // Debug log
+        storageManager.getPlugin().connectStorage();
+
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-
-    public Optional<StaffData> getStaffData( final UUID uuid ) {
-        return Optional.ofNullable( staffPlayers.get( uuid ) );
+        String storageType = this.getConfig().getString("storage-type");
+        StorageManager storageManager = new StorageManager(storageType, this);
+        storageManager.getPlugin().disconnectStorage();
     }
 
     public void setStaffMode(StaffData staffData, Player player) {
