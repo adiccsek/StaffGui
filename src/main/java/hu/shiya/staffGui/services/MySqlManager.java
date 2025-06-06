@@ -39,7 +39,7 @@ public class MySqlManager implements StorageProvider{
                         + "name VARCHAR(64), "
                         + "reason TEXT NOT NULL, "
                         + "warned_by VARCHAR(36) NOT NULL, "
-                        + "timestamp BIGINT NOT NULL, "
+                        + "timestamp VARCHAR(120) NOT NULL, "
                         + "duration BIGINT DEFAULT 0"
                         + ");";
                 PreparedStatement ps = connection.prepareStatement(sql);
@@ -51,7 +51,7 @@ public class MySqlManager implements StorageProvider{
                         + "name VARCHAR(64), "
                         + "reason TEXT NOT NULL, "
                         + "muted_by VARCHAR(36) NOT NULL, "
-                        + "timestamp BIGINT NOT NULL, "
+                        + "timestamp VARCHAR(120) NOT NULL, "
                         + "duration BIGINT NOT NULL"
                         + ");";
                 ps = connection.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class MySqlManager implements StorageProvider{
                         + "name VARCHAR(64), "
                         + "reason TEXT NOT NULL, "
                         + "banned_by VARCHAR(36) NOT NULL, "
-                        + "timestamp BIGINT NOT NULL, "
+                        + "timestamp VARCHAR(120) NOT NULL, "
                         + "duration BIGINT NOT NULL"
                         + ");";
                 ps = connection.prepareStatement(sql);
@@ -119,9 +119,10 @@ public class MySqlManager implements StorageProvider{
     public WarnedPlayer loadWarningAsync(UUID uuid) {
         try {
             if (connection == null || connection.isClosed()) return null;
-            String sql = "SELECT * FROM warnings WHERE player_uuid = ?";
+            String sql = "SELECT * FROM warnings WHERE player_uuid = ? AND (timestamp + duration) > ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, uuid.toString());
+            ps.setLong(2, System.currentTimeMillis());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 WarnedPlayer warnedPlayer = new WarnedPlayer();
@@ -169,9 +170,10 @@ public class MySqlManager implements StorageProvider{
     public MutedPlayer loadMuteAsync(UUID uuid) {
         try {
             if (connection == null || connection.isClosed()) return null;
-            String sql = "SELECT * FROM mutes WHERE player_uuid = ?";
+            String sql = "SELECT * FROM mutes WHERE player_uuid = ? AND (timestamp + duration) > ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, uuid.toString());
+            ps.setLong(2, System.currentTimeMillis());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 MutedPlayer mutedPlayer = new MutedPlayer();
@@ -220,9 +222,10 @@ public class MySqlManager implements StorageProvider{
     public BannedPlayer loadBanAsync(UUID uuid) {
         try {
             if (connection == null || connection.isClosed()) return null;
-            String sql = "SELECT * FROM bans WHERE player_uuid = ?";
+            String sql = "SELECT * FROM bans WHERE player_uuid = ? AND (timestamp + duration) > ? ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, uuid.toString());
+            ps.setLong(2, System.currentTimeMillis());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 BannedPlayer bannedPlayer = new BannedPlayer();

@@ -11,3 +11,6 @@ commands:
   staffitems:
     description: opens a gui where you can get staff helper items.
     usage: /staffitems
+  ban:
+    description: You can ban a player.
+    usage: /ban <player> <reason> <duration>

@@ -4,6 +4,7 @@ import hu.shiya.staffGui.StaffGui;
 import hu.shiya.staffGui.classes.BannedPlayer;
 import hu.shiya.staffGui.classes.MutedPlayer;
 import hu.shiya.staffGui.classes.WarnedPlayer;
+import hu.shiya.staffGui.utility.TimeHelper;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.UUID;
@@ -162,24 +163,29 @@ public class ConfigManager implements StorageProvider{
     @Override
     public BannedPlayer loadBanAsync(UUID uuid) {
         ConfigurationSection bansSection = plugin.getConfig().getConfigurationSection(currentPath + ".bans");
-        if (bansSection == null) {
-            return null;
-        }
+        if (bansSection == null) return null;
 
         for (String key : bansSection.getKeys(false)) {
             ConfigurationSection ban = bansSection.getConfigurationSection(key);
             if (ban == null) continue;
-            if (ban.getString("uuid").equals(uuid.toString())) {
-                BannedPlayer bannedPlayer = new BannedPlayer();
-                bannedPlayer.setName(ban.getString("playername"));
-                bannedPlayer.setIp(ban.getString("ip"));
-                bannedPlayer.setTimestamp(ban.getLong("timestamp"));
-                bannedPlayer.setDuration(ban.getInt("duration"));
-                bannedPlayer.setReason(ban.getString("reason"));
-                bannedPlayer.setBannedBy(UUID.fromString(ban.getString("banned_by")));
-                return bannedPlayer;
+
+            String storedUuid = ban.getString("uuid");
+            if (storedUuid != null && storedUuid.equals(uuid.toString())) {
+                long timestamp = ban.getLong("timestamp");
+                long duration = ban.getLong("duration");
+
+                if (!TimeHelper.isExpired(timestamp, duration)) {
+                    BannedPlayer bannedPlayer = new BannedPlayer();
+                    bannedPlayer.setName(ban.getString("playername"));
+                    bannedPlayer.setIp(ban.getString("ip"));
+                    bannedPlayer.setTimestamp(timestamp);
+                    bannedPlayer.setDuration(duration);
+                    bannedPlayer.setReason(ban.getString("reason"));
+                    bannedPlayer.setBannedBy(UUID.fromString(ban.getString("banned_by")));
+                    return bannedPlayer;
+                }
             }
         }
         return null;
-        }
     }
+}
